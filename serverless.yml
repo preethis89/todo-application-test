@@ -1,0 +1,35 @@
+
+
+service: todo-application-test
+
+provider:
+  name: aws
+  runtime: nodejs12.x
+  region: eu-west-1
+
+
+functions:
+  tasks:
+    handler: handler.app
+    environment:
+      DB_HOST: ${opt:DB_HOST}
+      DB_USER: ${opt:DB_USER}
+      DB_PASSWORD: ${opt:DB_PASSWORD}
+    events:
+      - http:
+          path: /tasks
+          method: GET
+          cors: true 
+      - http:
+          path: /tasks/{id} 
+          method: PUT
+          cors: true
+      - http:
+          path: /tasks
+          method: POST
+          cors: true
+      - http:
+          path: /tasks/{id}
+          method: DELETE
+          cors: true    
+         
