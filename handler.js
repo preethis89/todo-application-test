@@ -32,7 +32,7 @@ app.post('/tasks', (req, res) => {
 
   const query = 'INSERT INTO task (status, date, text, priority,userId) values (?,?,?,?,?)';
   // eslint-disable-next-line no-sequences
-  connection.query(query, [0, data.date, data.text, data.priority, data.userid], (err, results) => {
+  connection.query(query, [0, data.date, data.text, data.priority, 1001], (err, results) => {
     if (err) {
       // eslint-disable-next-line no-console
       console.log('Error in Mysql', err);
@@ -74,9 +74,9 @@ app.delete('/tasks/:taskId', (request, response) => {
 app.put('/tasks/:taskId', (request, response) => {
   const { taskId } = request.params;
   const data = request.body;
-  const query = 'UPDATE task set text = ?, status = ? WHERE taskId = ?';
+  const query = 'UPDATE task set ? WHERE taskId = ?';
   // eslint-disable-next-line no-unused-vars
-  connection.query(query, [data.text, data.status, taskId], (err, results) => {
+  connection.query(query, [data, taskId], (err, results) => {
     if (err) {
       // eslint-disable-next-line no-console
       console.log('Error from MySQL while inserting task', err);
